@@ -1,4 +1,6 @@
 const pg = require('pg');
+const dotenv = require('dotenv');
+dotenv.config();
 
 let pool;
 
@@ -19,11 +21,23 @@ if (process.env.DATABASE_URL) {
 // we'll connect to the postgres database that is
 // also running on our computer (localhost)
 else {
-  pool = new pg.Pool({
+  pool_args = {
     host: 'localhost',
     port: 5432,
     database: 'garden'
-  });
+  }
+  if (process.env.DB_USER) {
+    pool_args.user = process.env.DB_USER;
+  }
+  if (process.env.DB_PASSWORD) {
+    pool_args.password = process.env.DB_PASSWORD;
+  }
+  pool = new pg.Pool(pool_args);
 }
+
+// pool.query("SELECT * FROM plant;")
+//   .then(result => result.rows)
+//   .then(console.log)
+//   .catch(console.error);
 
 module.exports = pool;

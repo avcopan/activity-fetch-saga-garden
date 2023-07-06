@@ -1,7 +1,7 @@
 const express = require('express');
 const plantRouter = require('./routes/plant-router.js');
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8001;
 
 const app = express();
 
